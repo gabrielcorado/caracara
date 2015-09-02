@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    caracara (0.0.0.pre.alpha)
+    caracara (0.1.0)
       mustache (~> 1.0)
       rake
 
