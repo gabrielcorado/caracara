@@ -68,13 +68,13 @@ options = {
   container: 'caracara_app'
 }
 
-# Generate the SSH command
-command = deploy.command options
+# Compile the group commands
+commands = deploy.compile options
 ```
 
 **Run the command in your server**
 ```ruby
-Caracara::SSH.exec 'user', 'localhost', command
+Caracara::SSH.exec 'user', 'localhost', commands
 ```
 
 # Development
