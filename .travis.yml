@@ -3,8 +3,5 @@ rvm:
   - 2.2.0
 env:
   - "travis=true"
-before_script:
-  - cat ~/.ssh/*.pub >> ~/.ssh/authorized_keys
-  - ssh -o StrictHostKeyChecking=no localhost "exit"
 script:
   - bundle exec rspec
