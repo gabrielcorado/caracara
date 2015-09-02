@@ -53,12 +53,6 @@ end
 
 **Intialize the group**
 ```ruby
-# Initialize the group
-deploy = DeployGroup.init
-```
-
-**Generate the command**
-```ruby
 # Set the options
 options = {
   repository: 'git@github.com:gabrielcorado/caracara.git',
@@ -68,8 +62,14 @@ options = {
   container: 'caracara_app'
 }
 
+# Initialize the group
+deploy = DeployGroup.init options
+```
+
+**Generate the commands**
+```ruby
 # Compile the group commands
-commands = deploy.compile options
+commands = deploy.compile
 ```
 
 **Run the command in your server**

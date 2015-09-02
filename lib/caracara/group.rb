@@ -6,8 +6,9 @@ module Caracara
     attr_reader :tasks
 
     # Initialize
-    def initialize(tasks = [])
+    def initialize(tasks = [], options = {})
       @tasks = tasks
+      @options = options
     end
 
     # Tasks access
@@ -23,15 +24,15 @@ module Caracara
       # Each the steps
       @tasks.map do |task|
         # Compile the task
-        task.compile args
+        task.compile @options
       end
     end
 
     # Generate the SSH command
-    def command(args = {}, escape = true)
+    def command(escape = true)
       # Each tasks
       tasks = @tasks.map do |task|
-        task.command args, false
+        task.command @options, false
       end
 
       # Generate the full command
@@ -60,8 +61,8 @@ module Caracara
       end
 
       # Init
-      def init
-        new @tasks
+      def init(options = {})
+        new @tasks, options
       end
 
     end

@@ -19,7 +19,9 @@ end
 # Kickstart with the tests
 describe 'Groups' do
   # Initialize the group
-  let(:group) { GroupSpec.init }
+  let(:group) {
+    GroupSpec.init folder: 'niceFolder'
+  }
 
   it 'should return the right tasks from GroupSpec' do
     # Get the tasks
@@ -32,7 +34,7 @@ describe 'Groups' do
 
   it 'should return the compiled tasks' do
     # Get the compile tasks
-    tasks = group.compile folder: 'niceFolder'
+    tasks = group.compile
 
     # Assertions
     expect(tasks[0][0]).to eq('mkdir niceFolder/')
@@ -42,7 +44,7 @@ describe 'Groups' do
 
   it 'should return the group command' do
     # Get the command
-    command = group.command folder: 'niceFolder'
+    command = group.command
 
     # Assertions
     expect(command).to eq("mkdir\\ niceFolder/'\n'chmod\\ -R\\ 775\\ niceFolder/'\n'mv\\ anotherFolder/file.txt\\ niceFolder/movedFile.txt")
