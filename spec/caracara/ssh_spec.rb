@@ -59,7 +59,11 @@ describe 'SSH' do
     result = Caracara::SSH.exec command
 
     # Assertions
-    # it should return false because ssh localhost it not enable
-    expect(result[:status]).to eq(false)
+    if ENV['travis'] === 'true'
+      expect(result[:status]).to eq(true)
+    else
+      # it should return false because ssh localhost it not enable
+      expect(result[:status]).to eq(false)
+    end
   end
 end
