@@ -55,13 +55,11 @@ describe 'SSH' do
     # Generate command
     command = Caracara::SSH.generate 'ubuntu', 'localhost', %{ls -la}
 
-    # Run the command
-    result = Caracara::SSH.exec command
+    # Check if travis is not running this
+    if ENV['travis'] != 'true'
+      # Run the command
+      result = Caracara::SSH.exec command
 
-    # Assertions
-    if ENV['travis'] === 'true'
-      expect(result[:status]).to eq(true)
-    else
       # it should return false because ssh localhost it not enable
       expect(result[:status]).to eq(false)
     end
