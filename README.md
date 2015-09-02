@@ -3,6 +3,7 @@ Task runner based on [Envoy](http://laravel.com/docs/5.1/envoy) and [Mina](http:
 
 # Concepts
 **Task**: Everything is based on this entity, it has steps that are the commands that will be performed somewhere. ~~Ex: git-clone~~
+
 **Group**: Group of tasks that represents an business operation. ~~Ex: deploy~~
 
 # Usage
