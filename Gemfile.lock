@@ -1,0 +1,35 @@
+PATH
+  remote: .
+  specs:
+    caracara (0.0.0.pre.alpha)
+      mustache (~> 1.0)
+      rake
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    diff-lcs (1.2.5)
+    mustache (1.0.2)
+    rake (10.4.2)
+    rspec (3.0.0)
+      rspec-core (~> 3.0.0)
+      rspec-expectations (~> 3.0.0)
+      rspec-mocks (~> 3.0.0)
+    rspec-core (3.0.4)
+      rspec-support (~> 3.0.0)
+    rspec-expectations (3.0.4)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.0.0)
+    rspec-mocks (3.0.4)
+      rspec-support (~> 3.0.0)
+    rspec-support (3.0.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  caracara!
+  rspec (~> 3.0.0)
+
+BUNDLED WITH
+   1.10.6
