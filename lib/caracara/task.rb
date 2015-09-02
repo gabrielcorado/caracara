@@ -34,9 +34,19 @@ module Caracara
       # Task steps
       attr_reader :steps
 
-      # Run commands inside a dir
-      # @TODO
-      def dir(name)
+      # Run steps inside a dir
+      def dir(name, &blk)
+        # Store the current steps and set a blank steps
+        old, @steps = @steps, nil
+
+        # Generate the block steps
+        result = yield
+
+        # Restore the old steps
+        @steps = old
+
+        # Put dir commands in the steps
+        @steps.push "(cd #{name} && (#{result.join('\n')}))"
       end
 
       # Add a step
