@@ -48,7 +48,23 @@ module Caracara
       attr_reader :tasks
 
       # Set a new task to the group
-      def task(command)
+      # @param {Symbol} name The task name
+      # @param {Caracara::Task/String} task The task itself
+      def task(*args)
+        # Check if it two params
+        if args[1].nil?
+          # Set command
+          name = nil
+          command = args[0]
+        else
+          # Set command and name
+          name = args[0]
+          command = args[1]
+        end
+
+        # The task name cannot be :default
+        raise 'The task name cannot be :default' if name === :default || name === 'default'
+
         # Check the type of the command
         if command.is_a? String
           task = Task.new [command]
@@ -57,10 +73,22 @@ module Caracara
         end
 
         # Init the tasks
-        @tasks = [] if @tasks.nil?
+        if @tasks.nil?
+          @tasks = {
+            default: []
+          }
+        end
 
-        # Push it to the tasks
-        @tasks.push task
+        # Warn
+        puts '\nThere is a task with the same name, the oldest one will be overrided\n' unless @tasks[name].nil?
+
+        # Check the name
+        if name.nil?
+          # Push it to the tasks
+          @tasks[:default].push task
+        else
+          @tasks[name] = task
+        end
       end
 
       # Init
