@@ -6,8 +6,9 @@ module Caracara
     @steps = []
 
     # Initialize
-    def initialize(steps)
+    def initialize(steps, args = {})
       @steps = steps
+      @options = args
     end
 
     # Steps
@@ -17,10 +18,13 @@ module Caracara
 
     # Compile the tasks
     def compile(args = {})
+      # Merge args with defult options
+      options = @options.merge args
+
       # Each the steps
       @steps.map do |step|
         # Compile the mustache template
-        Mustache.render step, args
+        Mustache.render step, options
       end
     end
 
@@ -58,9 +62,10 @@ module Caracara
         @steps.push cmd
       end
 
-      def init
+      # Initialize a task
+      def init(args = {})
         # Create a new instance
-        new @steps
+        new @steps, args
       end
     end
   end
