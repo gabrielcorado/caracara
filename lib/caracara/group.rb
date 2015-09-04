@@ -21,10 +21,13 @@ module Caracara
 
     # Compile the tasks
     def compile(args = {})
+      # Merge options and args
+      options = @options.merge args
+
       # Each the steps
       @tasks.map do |task|
         # Compile the task
-        task.compile @options
+        task.compile options
       end
     end
 

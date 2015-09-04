@@ -42,6 +42,16 @@ describe 'Groups' do
     expect(tasks[1][0]).to eq('mv anotherFolder/file.txt niceFolder/movedFile.txt')
   end
 
+  it 'should return the compiled tasks using the defined args' do
+    # Get the compiled tasks
+    tasks = group.compile folder: 'argsFolder'
+
+    # Assertions
+    expect(tasks[0][0]).to eq('mkdir argsFolder/')
+    expect(tasks[0][1]).to eq('chmod -R 775 argsFolder/')
+    expect(tasks[1][0]).to eq('mv anotherFolder/file.txt argsFolder/movedFile.txt')
+  end
+
   it 'should return the group command' do
     # Get the command
     command = group.command
