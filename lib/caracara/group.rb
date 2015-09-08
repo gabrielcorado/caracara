@@ -11,14 +11,6 @@ module Caracara
       @options = options
     end
 
-    # Tasks access
-    def tasks
-      # Map the tasks
-      @tasks.map do |task|
-        task
-      end
-    end
-
     # Compile the tasks
     def compile(args = {})
       # Merge options and args
