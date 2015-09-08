@@ -44,10 +44,10 @@ end
 ```ruby
 class DeployGroup < Caracara::Group
   # Clone it
-  task GitCloneTask
+  task :clone, GitCloneTask
 
   # Dockernize it
-  task DockerTask
+  task :docker, DockerTask
 end
 ```
 
@@ -69,7 +69,7 @@ deploy = DeployGroup.init options
 **Generate the commands**
 ```ruby
 # Compile the group commands
-commands = deploy.compile
+commands = deploy.compile_all
 ```
 
 **Run the command in your server**
