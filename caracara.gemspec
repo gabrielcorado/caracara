@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.strip.split("\n")
   s.executables = Dir["bin/*"].map { |f| File.basename(f) }
 
-  s.add_dependency 'rake'
   s.add_dependency 'mustache', '~> 1.0'
 
   s.add_development_dependency 'rspec', '~> 3.0.0'
