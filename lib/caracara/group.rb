@@ -50,21 +50,6 @@ module Caracara
       # Set a new task to the group
       # @param {Symbol} name The task name
       # @param {Caracara::Task/String} task The task itself
-      def task(*args)
-        # Check if it two params
-        if args[1].nil?
-          # Set command
-          name = nil
-          command = args[0]
-        else
-          # Set command and name
-          name = args[0]
-          command = args[1]
-        end
-
-        # The task name cannot be :default
-        raise 'The task name cannot be :default' if name === :default || name === 'default'
-
       def task(name, command)
         # Check the type of the command
         if command.is_a? String
