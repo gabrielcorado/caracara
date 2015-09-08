@@ -65,6 +65,7 @@ module Caracara
         # The task name cannot be :default
         raise 'The task name cannot be :default' if name === :default || name === 'default'
 
+      def task(name, command)
         # Check the type of the command
         if command.is_a? String
           task = Task.new [command]
@@ -73,22 +74,10 @@ module Caracara
         end
 
         # Init the tasks
-        if @tasks.nil?
-          @tasks = {
-            default: []
-          }
-        end
+        @tasks = {} if @tasks.nil?
 
-        # Warn
-        puts '\nThere is a task with the same name, the oldest one will be overrided\n' unless @tasks[name].nil?
-
-        # Check the name
-        if name.nil?
-          # Push it to the tasks
-          @tasks[:default].push task
-        else
-          @tasks[name] = task
-        end
+        # Set the task
+        @tasks[name] = task
       end
 
       # Init
