@@ -23,10 +23,12 @@ module Caracara
       task.compile options
     end
 
-      # Each the steps
-      @tasks.map do |task|
+    # Compile all the tasks
+    def compile_all(options = {})
+      # Each tasks
+      @tasks.keys.map do |name|
         # Compile the task
-        task.compile options
+        compile name, options
       end
     end
 
@@ -44,9 +46,13 @@ module Caracara
       # Generate the full command
       SSH.command task, escape
     end
+
+    # Generate all tasks commands
+    def command_all(options = {}, escape = true)
       # Each tasks
-      tasks = @tasks.map do |task|
-        task.command @options, false
+      tasks = @tasks.keys.map do |name|
+        # Compile the task
+        command name, options, false
       end
 
       # Generate the full command
