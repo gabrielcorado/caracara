@@ -1,16 +1,14 @@
 PATH
   remote: .
   specs:
-    caracara (0.1.0)
+    caracara (0.2.0)
       mustache (~> 1.0)
-      rake
 
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.2.5)
     mustache (1.0.2)
-    rake (10.4.2)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
