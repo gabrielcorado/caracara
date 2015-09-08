@@ -1,21 +1,22 @@
 # Include the helper
 require 'spec_helper'
 
+class SharedTask < Caracara::Task
+  step 'echo "Im doing some tasks with Caracara"'
+end
+
 # Class definitions
 class TaskSpec < Caracara::Task
+  step SharedTask
+
   step 'mkdir {{folder.name}}/'
   step 'chown -R {{user}} {{folder.name}}'
   step 'chmod -R {{folder.permission}} {{folder.name}}/'
 
   dir '{{folder.name}}' do
+    step SharedTask
     step 'echo "{{text}}" > file.txt'
   end
-end
-
-class TaskTwoSpec < Caracara::Task
-  step 'mkdir {{folder.name}}/'
-  step 'chown -R {{user}} {{folder.name}}'
-  step 'chmod -R {{folder.permission}} {{folder.name}}/'
 end
 
 # Tests
@@ -35,10 +36,11 @@ describe 'Task' do
     steps = task.steps
 
     # Assertions
-    expect(steps[0]).to eq('mkdir {{folder.name}}/')
-    expect(steps[1]).to eq('chown -R {{user}} {{folder.name}}')
-    expect(steps[2]).to eq('chmod -R {{folder.permission}} {{folder.name}}/')
-    expect(steps[3]).to eq('(cd {{folder.name}} && (echo "{{text}}" > file.txt))')
+    expect(steps[0]).to eq("echo \"Im doing some tasks with Caracara\"")
+    expect(steps[1]).to eq('mkdir {{folder.name}}/')
+    expect(steps[2]).to eq('chown -R {{user}} {{folder.name}}')
+    expect(steps[3]).to eq('chmod -R {{folder.permission}} {{folder.name}}/')
+    expect(steps[4]).to eq("(cd {{folder.name}} && (echo \"Im doing some tasks with Caracara\"\\necho \"{{text}}\" > file.txt))")
   end
 
   it 'should compile the steps' do
@@ -46,10 +48,11 @@ describe 'Task' do
     steps = task.compile
 
     # Assertions
-    expect(steps[0]).to eq('mkdir niceFolder/')
-    expect(steps[1]).to eq('chown -R ubuntu niceFolder')
-    expect(steps[2]).to eq('chmod -R 755 niceFolder/')
-    expect(steps[3]).to eq('(cd niceFolder && (echo "Some nice text!" > file.txt))')
+    expect(steps[0]).to eq("echo \"Im doing some tasks with Caracara\"")
+    expect(steps[1]).to eq('mkdir niceFolder/')
+    expect(steps[2]).to eq('chown -R ubuntu niceFolder')
+    expect(steps[3]).to eq('chmod -R 755 niceFolder/')
+    expect(steps[4]).to eq("(cd niceFolder && (echo \"Im doing some tasks with Caracara\"\\necho \"Some nice text!\" > file.txt))")
   end
 
   it 'should compile the steps using specific args' do
@@ -61,10 +64,11 @@ describe 'Task' do
                          }
 
     # Assertions
-    expect(steps[0]).to eq('mkdir argsFolder/')
-    expect(steps[1]).to eq('chown -R root argsFolder')
-    expect(steps[2]).to eq('chmod -R 655 argsFolder/')
-    expect(steps[3]).to eq('(cd argsFolder && (echo "Some nice text!" > file.txt))')
+    expect(steps[0]).to eq("echo \"Im doing some tasks with Caracara\"")
+    expect(steps[1]).to eq('mkdir argsFolder/')
+    expect(steps[2]).to eq('chown -R root argsFolder')
+    expect(steps[3]).to eq('chmod -R 655 argsFolder/')
+    expect(steps[4]).to eq("(cd argsFolder && (echo \"Im doing some tasks with Caracara\"\\necho \"Some nice text!\" > file.txt))")
   end
 
   it 'should generate the SSH command' do
@@ -72,6 +76,6 @@ describe 'Task' do
     command = task.command
 
     # Assertions
-    expect(command).to eq("mkdir\\ niceFolder/'\n'chown\\ -R\\ ubuntu\\ niceFolder'\n'chmod\\ -R\\ 755\\ niceFolder/'\n'\\(cd\\ niceFolder\\ \\&\\&\\ \\(echo\\ \\\"Some\\ nice\\ text\\!\\\"\\ \\>\\ file.txt\\)\\)")
+    expect(command).to eq("echo\\ \\\"Im\\ doing\\ some\\ tasks\\ with\\ Caracara\\\"'\n'mkdir\\ niceFolder/'\n'chown\\ -R\\ ubuntu\\ niceFolder'\n'chmod\\ -R\\ 755\\ niceFolder/'\n'\\(cd\\ niceFolder\\ \\&\\&\\ \\(echo\\ \\\"Im\\ doing\\ some\\ tasks\\ with\\ Caracara\\\"\\\\necho\\ \\\"Some\\ nice\\ text\\!\\\"\\ \\>\\ file.txt\\)\\)")
   end
 end

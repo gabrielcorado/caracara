@@ -59,7 +59,12 @@ module Caracara
         @steps = [] if @steps.nil?
 
         # Add a new step
-        @steps.push cmd
+        return @steps.push(cmd) if cmd.is_a?(String)
+
+        # If it is another task
+        cmd.steps.each do |task_cmd|
+          @steps.push task_cmd
+        end
       end
 
       # Initialize a task
