@@ -32,7 +32,19 @@ module Caracara
     end
 
     # Generate the SSH command
-    def command(escape = true)
+    def command(name, options = {}, ssh_command = true, escape = true)
+      # Set options
+      options = @options.merge options
+
+      # Generate task command
+      task = @tasks[name].command options, false
+
+      # Do not return the SSH command
+      return task unless ssh_command
+
+      # Generate the full command
+      SSH.command task, escape
+    end
       # Each tasks
       tasks = @tasks.map do |task|
         task.command @options, false
