@@ -50,7 +50,7 @@ module Caracara
         @steps = old
 
         # Put dir commands in the steps
-        @steps.push "(cd #{name} && (#{result.join('\n')}))"
+        step "(cd #{name} && (#{result.join('\n')}))"
       end
 
       # Add a step
