@@ -1,4 +1,4 @@
-# Caracara [![Build Status](https://travis-ci.org/gabrielcorado/caracara.svg)](https://travis-ci.org/gabrielcorado/caracara)
+# Caracara [![Build Status](https://travis-ci.org/gabrielcorado/caracara.svg)](https://travis-ci.org/gabrielcorado/caracara) [![Gem Version](https://badge.fury.io/rb/caracara.svg)](http://badge.fury.io/rb/caracara)
 Task runner based on [Envoy](http://laravel.com/docs/5.1/envoy) and [Mina](http://mina-deploy.github.io/mina/)
 
 # Concepts
