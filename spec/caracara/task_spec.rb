@@ -10,7 +10,7 @@ class TaskSpec < Caracara::Task
   step SharedTask
 
   step 'mkdir {{folder.name}}/'
-  step 'chown -R {{user}} {{folder.name}}'
+  step 'chown -R {{user}} {{folder.name}}', user: 'forcedUser'
   step 'chmod -R {{folder.permission}} {{folder.name}}/'
 
   dir '{{folder.name}}' do
@@ -50,7 +50,7 @@ describe 'Task' do
     # Assertions
     expect(steps[0]).to eq("echo \"Im doing some tasks with Caracara\"")
     expect(steps[1]).to eq('mkdir niceFolder/')
-    expect(steps[2]).to eq('chown -R ubuntu niceFolder')
+    expect(steps[2]).to eq('chown -R forcedUser niceFolder')
     expect(steps[3]).to eq('chmod -R 755 niceFolder/')
     expect(steps[4]).to eq("(cd niceFolder && (echo \"Im doing some tasks with Caracara\"\\necho \"Some nice text!\" > file.txt))")
   end
@@ -66,7 +66,7 @@ describe 'Task' do
     # Assertions
     expect(steps[0]).to eq("echo \"Im doing some tasks with Caracara\"")
     expect(steps[1]).to eq('mkdir argsFolder/')
-    expect(steps[2]).to eq('chown -R root argsFolder')
+    expect(steps[2]).to eq('chown -R forcedUser argsFolder')
     expect(steps[3]).to eq('chmod -R 655 argsFolder/')
     expect(steps[4]).to eq("(cd argsFolder && (echo \"Im doing some tasks with Caracara\"\\necho \"Some nice text!\" > file.txt))")
   end
@@ -76,6 +76,6 @@ describe 'Task' do
     command = task.command
 
     # Assertions
-    expect(command).to eq("echo\\ \\\"Im\\ doing\\ some\\ tasks\\ with\\ Caracara\\\"'\n'mkdir\\ niceFolder/'\n'chown\\ -R\\ ubuntu\\ niceFolder'\n'chmod\\ -R\\ 755\\ niceFolder/'\n'\\(cd\\ niceFolder\\ \\&\\&\\ \\(echo\\ \\\"Im\\ doing\\ some\\ tasks\\ with\\ Caracara\\\"\\\\necho\\ \\\"Some\\ nice\\ text\\!\\\"\\ \\>\\ file.txt\\)\\)")
+    expect(command).to eq("echo\\ \\\"Im\\ doing\\ some\\ tasks\\ with\\ Caracara\\\"'\n'mkdir\\ niceFolder/'\n'chown\\ -R\\ forcedUser\\ niceFolder'\n'chmod\\ -R\\ 755\\ niceFolder/'\n'\\(cd\\ niceFolder\\ \\&\\&\\ \\(echo\\ \\\"Im\\ doing\\ some\\ tasks\\ with\\ Caracara\\\"\\\\necho\\ \\\"Some\\ nice\\ text\\!\\\"\\ \\>\\ file.txt\\)\\)")
   end
 end
