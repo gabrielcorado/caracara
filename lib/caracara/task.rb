@@ -23,12 +23,13 @@ module Caracara
     # Compile the tasks
     def compile(args = {})
       # Merge args with defult options
-      options = @options.merge args
+      options = Utils.merge @options, args
 
       # Each the steps
       @steps.map.with_index do |step, index|
         # Append with the fixed options
-        options = options.merge(@fixed_options[index]) unless @fixed_options[index].nil?
+        # options = options.merge(@fixed_options[index]) unless @fixed_options[index].nil?
+        options = Utils.merge(options, @fixed_options[index]) unless @fixed_options[index].nil?
 
         # Compile the mustache template
         Mustache.render step, options

@@ -14,7 +14,7 @@ module Caracara
     # Compile the tasks
     def compile(name, options = {})
       # Set options
-      options = @options.merge options
+      options = Utils.merge @options, options
 
       # Get the tasks
       task = @tasks[name]
@@ -35,7 +35,7 @@ module Caracara
     # Generate the SSH command
     def command(name, options = {}, ssh_command = true, escape = true)
       # Set options
-      options = @options.merge options
+      options = Utils.merge @options, options
 
       # Generate task command
       task = @tasks[name].command options, false
