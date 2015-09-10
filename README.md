@@ -72,9 +72,14 @@ deploy = DeployGroup.init options
 commands = deploy.compile_all
 ```
 
+**Generate the SSH Command**
+```ruby
+ssh_command = Caracara::SSH.generate 'user', 'localhost', commands
+```
+
 **Run the command in your server**
 ```ruby
-Caracara::SSH.exec 'user', 'localhost', commands
+Caracara::SSH.exec ssh_command
 ```
 
 # Development
