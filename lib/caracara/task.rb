@@ -28,17 +28,44 @@ module Caracara
       # Each the steps
       @steps.map.with_index do |step, index|
         # Append with the fixed options
-        # options = options.merge(@fixed_options[index]) unless @fixed_options[index].nil?
         options = Utils.merge(options, @fixed_options[index]) unless @fixed_options[index].nil?
 
         # Compile the mustache template
-        Mustache.render step, options
+        Mustache.render step, compile_options(options, options)
       end
     end
 
     # Generate the SSH command
     def command(args = {}, escape = true)
       SSH.command compile(args), escape
+    end
+
+    private
+
+    # Compile hash of options
+    # @param {Hash} compile The hash that will be compiled using Mustache
+    # @param {Hash} options Options used to compile this Hash
+    # @return {Hash} A compiled hash with the same structure of the `compile` one
+    def compile_options(compile, options)
+      # Compiled options
+      compiled_options = {}
+
+      # Each options
+      compile.each do |key, value|
+        # Check if the value is another hash
+        # Compile the content with the options
+        compiled = if value.is_a?(Hash)
+          compile_options value, options
+        else
+          Mustache.render value.to_s, options
+        end
+
+        # Put it into the compile_options
+        compiled_options[key] = compiled
+      end
+
+      # Return the compile options
+      compiled_options
     end
 
     # Static methods

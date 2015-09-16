@@ -19,6 +19,10 @@ class TaskSpec < Caracara::Task
   end
 end
 
+class AnotherTaskSpec < Caracara::Task
+  step 'docker -d run {{image}}'
+end
+
 # Tests
 describe 'Task' do
   # Initialize the task
@@ -29,6 +33,13 @@ describe 'Task' do
                     permission: 755
                   },
                   text: 'Some nice text!'
+  }
+
+  # Initialize the task
+  let(:another_task) {
+    AnotherTaskSpec.init project: 'app',
+                         version: '1.5.0',
+                         image: '{{project}}-{{version}}'
   }
 
   it 'should return the steps' do
@@ -53,6 +64,14 @@ describe 'Task' do
     expect(steps[2]).to eq('chown -R forcedUser niceFolder')
     expect(steps[3]).to eq('chmod -R 755 niceFolder/')
     expect(steps[4]).to eq("(cd niceFolder && (echo \"Im doing some tasks with Caracara\"\\necho \"Some nice text!\" > file.txt))")
+  end
+
+  it 'should compile the steps from AnotherTask' do
+    # Compile the steps
+    steps = another_task.compile
+
+    # Assertions
+    expect(steps[0]).to eq('docker -d run app-1.5.0')
   end
 
   it 'should compile the steps using specific args' do
