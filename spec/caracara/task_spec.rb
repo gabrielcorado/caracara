@@ -21,6 +21,7 @@ end
 
 class AnotherTaskSpec < Caracara::Task
   step 'docker -d run {{image}}'
+  step 'echo "{{#times}}{{.}}{{/times}}"'
 end
 
 # Tests
@@ -39,7 +40,8 @@ describe 'Task' do
   let(:another_task) {
     AnotherTaskSpec.init project: 'app',
                          version: '1.5.0',
-                         image: '{{project}}-{{version}}'
+                         image: '{{project}}-{{version}}',
+                         times: ['one ', 'two ', 'three']
   }
 
   it 'should return the steps' do
@@ -72,6 +74,7 @@ describe 'Task' do
 
     # Assertions
     expect(steps[0]).to eq('docker -d run app-1.5.0')
+    expect(steps[1]).to eq("echo \"one two three\"")
   end
 
   it 'should compile the steps using specific args' do

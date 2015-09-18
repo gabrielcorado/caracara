@@ -56,6 +56,8 @@ module Caracara
         # Compile the content with the options
         compiled = if value.is_a?(Hash)
           compile_options value, options
+        elsif value.is_a?(Array)
+          value
         else
           Mustache.render value.to_s, options
         end

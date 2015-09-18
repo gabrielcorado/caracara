@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    caracara (0.6.0)
+    caracara (0.6.1)
       mustache (~> 1.0)
 
 GEM
